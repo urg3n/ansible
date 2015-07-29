@@ -1,0 +1,11 @@
+---
+- hosts: storageservers
+  remote_user: pgsql
+  gather_facts: False
+  sudo: True
+  tasks:
+    - name: stop clamav
+      service: name=clamav-daemon state=stopped
+
+    - name: stop spamassassin
+      service: name=spamassassin state=stopped

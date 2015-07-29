@@ -1,0 +1,21 @@
+---
+- hosts: storageservers
+  remote_user: pgsql
+  gather_facts: False
+  sudo: True
+  tasks:
+    - file: path=/export/disk4/brick state=directory
+#      - lineinfile: dest=/etc/fstab regexp='' insertafter=EOF line='/dev/sdd1 /export/disk3 xfs defaults 0 0'
+#      - lineinfile: dest=/etc/fstab regexp='' insertafter=EOF line='/dev/sdc1 /export/disk2 xfs defaults 0 0'
+#      - file: path=/export/disk3/ state=directory
+#      - lineinfile: dest=/etc/fstab regexp='' insertafter=EOF line='/dev/sdd1 /export/disk3 xfs defaults 0 0'
+#      - filesystem: fstype=xfs dev=/dev/sdd1 force=yes
+#      - file: path=/export/disk1/brick state=directory mode=0755
+#      - file: path=/export/disk2/brick state=directory
+#      - replace: dest=/etc/fstab regexp='^/dev/sdc1\s+.*' replace='/dev/sdc1 /export/disk2 xfs defaults 0 0' backup=yes
+#      - lineinfile: dest=/etc/fstab regexp='' insertafter=EOF line='/dev/sdc1 /export/disk2 xfs defaults 0 0'
+#      - replace: dest=/etc/fstab regexp='^/dev/sdc1\s+.*' replace='' backup=yes
+#      - file: path=/export/brick state=directory mode=0755
+#      - filesystem: fstype=xfs dev=/dev/sdb1 force=yes
+#      - lineinfile: dest=/etc/fstab regexp='' insertafter=EOF line='/dev/sdb1 /export/disk1 xfs defaults 0 0 '
+#      - lineinfile: dest=/etc/fstab regexp='' insertafter=EOF line='localhost:/WEBG /export/brick defaults,_netdev 0 0'

@@ -1,0 +1,11 @@
+---
+- name: Transfer and execute a script.
+  hosts: storageservers
+  remote_user: pgsql
+  sudo: yes
+  tasks:
+     - name: Transfer the script
+       copy: src=examplescript.sh dest=/home/pgsql mode=0775
+
+     - name: Execute the script
+       command: sh /home/pgsql/examplescript.sh

@@ -1,0 +1,7 @@
+---
+- hosts: storageservers
+  remote_user: pgsql
+  gather_facts: False
+  sudo: True
+  tasks:
+    - filesystem: fstype=xfs dev=/dev/sdd1 force=yes

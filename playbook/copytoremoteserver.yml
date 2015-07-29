@@ -1,0 +1,7 @@
+---
+- hosts: storageservers
+  remote_user: pgsql
+  gather_facts: False
+  sudo: True
+  tasks:
+    - copy: src=/home/pgsql/sphpblog-0.8.4.zip dest=/var/www/html/sphpblog.zip owner=root group=pgsql 0644

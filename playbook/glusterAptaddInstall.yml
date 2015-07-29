@@ -1,0 +1,12 @@
+---
+- hosts: storageservers
+  remote_user: pgsql
+  gather_facts: False
+  sudo: True
+  tasks:
+    - name: update repository with glusterppa
+      apt_repository: repo='ppa:gluster/glusterfs-3.6' state=present
+    - name: update apt cache and install gluster
+      apt: update_cache=yes name=glusterfs-server state=latest
+      apt: update_cache=no name=xfsprogs state=latest
+      apt: update_cache=no name=glusterfs-client state=latest

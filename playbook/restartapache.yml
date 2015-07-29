@@ -1,0 +1,8 @@
+---
+- hosts: storageservers
+  remote_user: pgsql
+  gather_facts: False
+  sudo: True
+  tasks:
+    - service: name=apache2 state=restarted
+    - service: name=memcached state=restarted
