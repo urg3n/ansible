@@ -1,0 +1,46 @@
+[app]
+192.168.60.4
+192.168.60.5
+# Database server
+[db]
+192.168.60.6
+# Group 'multi' with all servers
+[multi:children]
+app
+db
+[webdb]
+10.0.1.11
+10.0.1.12
+
+
+# Variables that will be applied to all servers
+[multi:vars]
+ansible_ssh_user=ctuser1
+ansible_ssh_private_key_file=/root/.ssh/private_key
+ansible_port=44022
+
+
+ansible multi -a "hostname" 
+ansible all -m ping 
+ansible webdb -a "hostname" -f 25   # f = number of forks to run in parallel
+
+ansible webdb -a "ls -l /root" -b -f 33 # -b = become root user/ use sudo
+ansible all -a "whoami" -u ctuser -K  #-K = askpassword
+
+ansible webdb -s -m apt -a "name=ntp state=present" -u ctuser -f 30    #-s = use sudo   
+OR
+ansible webdb -s -m apt -a "name=ntp state=present" -u ctuser -f 30 -K    
+#-s = use sudo and -K =ask password if user doesnt have NOpasswd in visudo
+
+ansible all -m file -a "path=/etc/hosts mode=0644" -b -K
+
+ansible all -m file -a "path=/home/user1/host.txt state=file"  #ensure if exist as regular file
+ansible all -m file -a "path=/home/user1/host.txt state=absent"  #ensure if it dosent exist as regular file
+
+ansible webdb -m service -a "name=apache2 state=started"  #check if apache2 is started
+ansible webdb -a 'apachectl stop' -b -K  #stop apache service
+
+ansible webdb -m copy -a "src=/tmp/disk.log dest=/home mode=0500" -K -u ctuser
+ansible webdb -a "mkdir /store" -f 25 -s -K -u ctuser
+
+
