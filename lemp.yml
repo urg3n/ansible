@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  remote_user: ctuser
+  vars:
+    MySQL_root_pass: ReplaceWithYourPassword
+  tasks:
+#  - name: apt-key for nginx
+#    script: /etc/ansible/addnginxkey.sh
+#  - name: setup deb nginx source
+#    apt_repository: repo='deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx' state=present
+#  - name: setup deb-src nginx
+#    apt_repository: repo='deb-src http://nginx.org/packages/mainline/ubuntu/ trusty nginx' state=present
+#  - name: update the cache
+#    apt: update_cache=yes
+#  - name: install nginx
+#    apt: name=nginx state=latest
+  - name: install mysql
+    apt: name=mysql-server state=latest
+  - name: install php-fpm
+    apt: name={{ item }} state=latest
+    with_items:
+    - php5-fpm
+    - php5-mysql
+  - name: make sure nginx is running
+    service: name=nginx state=started
+  - name: make sure mysql server is started
+    service: name=mysql state=started
+  - name: secure php.ini for cgi.fix_pathinfo
+    lineinfile: dest=/etc/php5/fpm/php.ini line="cgi.fix_pathinfo=0"
+  - name: make sure php-fpm is started
+    service: name=php5-fpm state=started
